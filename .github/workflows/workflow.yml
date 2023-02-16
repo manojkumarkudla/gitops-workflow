@@ -25,7 +25,7 @@ jobs:
         id: docker_meta
         uses: crazy-max/ghaction-docker-meta@v1
         with:
-          images: gbaeke/flux-rt
+          images: manojkumar/gitops
           tag-sha: true
           tag-edge: false
 
@@ -50,8 +50,8 @@ jobs:
         with:
           push: true
           tags: ${{ steps.docker_meta.outputs.tags }}
-          context: ./app
-          file: ./app/Dockerfile
+          #context: ./app
+          #file: ./app/Dockerfile
 
       -
         name: Image tags
@@ -70,7 +70,7 @@ jobs:
       env:
         REPO_TOKEN: ${{secrets.REPO_TOKEN}}
     - run: kustomize edit set image gbaeke/flux-rt:sha-$(git rev-parse --short $GITHUB_SHA)
-      working-directory: ./deploy/overlays/dev
+      working-directory: ./deploy/overlays/preprod
     - run: git add .
     - run: |
         git config user.email "$EMAIL"
@@ -93,7 +93,7 @@ jobs:
       env:
         REPO_TOKEN: ${{secrets.REPO_TOKEN}}
     - run: kustomize edit set image gbaeke/flux-rt:${GITHUB_REF#refs/*/}
-      working-directory: ./deploy/overlays/prd
+      working-directory: ./deploy/overlays/prod
     - run: git add .
     - run: |
         git config user.email "$EMAIL"
