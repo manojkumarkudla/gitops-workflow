@@ -25,7 +25,7 @@ jobs:
         id: docker_meta
         uses: crazy-max/ghaction-docker-meta@v1
         with:
-          images: manojkumar/gitops
+          images: manojkumarkudla/gitops
           tag-sha: true
           tag-edge: false
 
@@ -66,10 +66,10 @@ jobs:
     - uses: imranismail/setup-kustomize@v1
       with:
         kustomize-version: 3.8.6
-    - run: git clone https://${REPO_TOKEN}@github.com/gbaeke/realtimeapp-infra.git .
+    - run: git clone https://${REPO_TOKEN}@github.com/manojkumarkudla/infra-deploy.git .
       env:
         REPO_TOKEN: ${{secrets.REPO_TOKEN}}
-    - run: kustomize edit set image gbaeke/flux-rt:sha-$(git rev-parse --short $GITHUB_SHA)
+    - run: kustomize edit set image manokjumarkudla/flux-rt:sha-$(git rev-parse --short $GITHUB_SHA)
       working-directory: ./deploy/overlays/preprod
     - run: git add .
     - run: |
@@ -89,10 +89,10 @@ jobs:
     - uses: imranismail/setup-kustomize@v1
       with:
         kustomize-version: 3.8.6
-    - run: git clone https://${REPO_TOKEN}@github.com/gbaeke/realtimeapp-infra.git .
+    - run: git clone https://${REPO_TOKEN}@github.com/mnojkumarkudla/infra-deploy.git .
       env:
         REPO_TOKEN: ${{secrets.REPO_TOKEN}}
-    - run: kustomize edit set image gbaeke/flux-rt:${GITHUB_REF#refs/*/}
+    - run: kustomize edit set image manojkumarkudla/flux-rt:${GITHUB_REF#refs/*/}
       working-directory: ./deploy/overlays/prod
     - run: git add .
     - run: |
